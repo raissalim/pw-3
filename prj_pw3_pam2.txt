@@ -1,0 +1,59 @@
+1 - Criar o projeto
+
+2 - Criar o arquivo para a tabela usuário
+php artisan make:migration create_tbUsuario_table
+
+3 - Adicionar os campos da tabela:
+ $table->id();
+            $table->string('nomeUsuario');
+            $table->string('senhaUsuario');
+            $table->string('emailUsuario');
+            $table->date('dataNascimentousuario');
+            $table->string('generoUsuario');
+            $table->float('alturaUsuario');
+            $table->float('pesoUsuario');
+            $table->string('fotoUsuario');
+            $table->timestamps();
+
+4 - no arquivo .env colocar o nome do banco bdSaude
+
+5 - Executar o comando php artisan migrate
+(não esqueça de habilitar o xampp, para que seja criado o banco e a tabela)
+
+6 - Criar o model
+php artisan make:model Usuario
+
+7 - Criar o controller
+php artisan make:controller UsuarioController --resource
+
+8 - No model do usuário, colocar o código:
+
+ use HasFactory;
+
+    protected $table = 'tb_usuario';
+
+    public $fillable = ['id','nomeUsuario','senhaUsuario','emailUsuario','dataNascimentousuario','generoUsuario','alturaUsuario','pesoUsuario','fotoUsuario','created_at','updated_at'];
+
+9 - No controller
+use App\Models\Usuario;
+
+ public function index()
+    {
+        $usuario = Usuario::all();
+        return $usuario;
+    }
+
+10 - No banco adicionar registros via insert. Exemplo:
+insert into tb_usuario values(
+    null,
+    'Maria Santos',
+    '123456',
+    'maria@gmail.com',
+    '2000-05-22',
+    'feminino',
+    1.65,
+    62,
+    'caminhoImagem/nomeImagem.extensaoImagem',
+    '2025-04-03',
+    '2025-04-03'
+);
